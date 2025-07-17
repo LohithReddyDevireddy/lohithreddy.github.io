@@ -1,119 +1,140 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>అమ్మకు ప్రేమతో</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ammaku Prematho</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #fefcea, #f1daff);
-      color: #4b2e83;
-      animation: fadeIn 2s ease-in;
+      background: linear-gradient(135deg, #ffc0cb, #fff3e6, #e6e6fa);
       overflow-x: hidden;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+
+    .magic-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      background: url('https://media.giphy.com/media/WoWm8YzFQJg5i/giphy.gif') repeat;
+      background-size: contain;
+      opacity: 0.05;
     }
-    header {
-      background-color: #ffe0f0;
-      padding: 30px 20px;
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    header h1 {
+      color: #6a0dad;
       font-size: 2.5rem;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ffd700;
     }
-    .heart-animation {
-      font-size: 2rem;
-      color: red;
-      animation: heartbeat 1.2s infinite;
+
+    .poem-card {
+      background-color: #fff8dc;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.5);
+      border: 2px solid #e6e6fa;
     }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-    }
-    section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .card {
-      background: white;
-      margin: 20px auto;
-      padding: 25px;
-      max-width: 700px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
-    h2 {
-      color: #924e9b;
-      margin-bottom: 10px;
-    }
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    .typing {
+
+    .reveal-button {
       display: inline-block;
-      border-right: 2px solid;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+      background: #ffb6c1;
+      color: #fff;
+      padding: 10px 20px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
     }
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    .reveal-button:hover {
+      background: #e75480;
     }
-    @keyframes blink {
-      from, to { border-color: transparent; }
-      50% { border-color: black; }
+
+    .surprise {
+      display: none;
+      margin-top: 10px;
+      font-size: 1.1rem;
+      background: #fff;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>అమ్మకు ప్రేమతో</h1>
-    <div class="heart-animation">❤️</div>
-  </header>
+  <div class="magic-bg"></div>
+  <div class="container">
+    <h1>🎉 అమ్మకు ప్రేమతో 🎉</h1>
 
-  <section>
-    <div class="card">
-      <h2 class="typing">మీ ముద్దు కొడుకు నుండి...</h2>
-      <p>ఈ చిన్న వెబ్‌సైట్ నాకొచ్చే ప్రతి తియ్యని అనుభూతిని... ప్రతి చిరునవ్వును... మీ కోసం అంకితం చేస్తోంది.</p>
+    <div class="poem-card">
+      <p style="font-size: 1.2rem; line-height: 2;">
+        అమ్మా… నా శ్వాసకి శక్తిని ఇచ్చే నీవే<br>
+        నా వాక్యాలకు వేదిక అయినది నీవే<br>
+        నా కన్నీటి వెనకాల చిరునవ్వు చూపించేది నీవే<br>
+        నా ప్రతి గెలుపుకి కారణమైన దేవత నీవే<br><br>
+        నీ కళ్ళల్లో నా లోకాన్ని చూసాను<br>
+        నీ చేతుల్లో దేవుడి స్పర్శ అనిపించింది<br>
+        నా మనసు బాధపడినపుడు – నువ్వు కన్నీటి మందవయ్యావు<br><br>
+        Happy Birthday Amma! 💖<br>
+        నా మనసుకే తెలియని ప్రేమకు... ఈ చిన్న గిఫ్ట్.
+      </p>
     </div>
 
-    <div class="card">
-      <h2>ఎందుకు అంటే...</h2>
-      <p>ఎప్పుడూ నన్ను ప్రేమగా అంగీకరించి, నాకు బలం ఇచ్చిన మీరు... నా జీవితంలో అసలైన హీరో.</p>
-    </div>
-
-    <div class="card">
-      <h2>మీ నవ్వు...</h2>
-      <p>అది నా రోజు సాఫీగా మారే ఒకే ఒక్క మంత్రం!</p>
-    </div>
-
-    <div class="card">
-      <h2>ఇంకా చెప్పాలి...</h2>
-      <p>ప్రతి రోజు మీకు ప్రేమగా 'థ్యాంక్స్' చెప్పడానికి ఈ ప్లాట్‌ఫాం.</p>
-    </div>
-  </section>
-
-  <div class="footer">
-    Made with ❤️ by your son Lohith Reddy
+    <h2 style="color:#6a0dad">🌟 14 Surprises for You 🌟</h2>
+    <div id="surprises"></div>
   </div>
+
+  <script>
+    const surpriseTexts = [
+      'మీ నవ్వు నాకు ఓ ఆశా దీపం 💫',
+      'మీరు చెప్పిన చిన్న మాటే నాకు మార్గదర్శకం ✨',
+      'మీ ప్రేమే నా శ్వాస 💖',
+      'మీరు లేకపోతే నేనెవరో తెలియదు 🌼',
+      'నా మొదటి గురువు మీరే 👩‍🏫',
+      'అమ్మ అంటే ఒక లోకం – అది మీ రూపమే 🌍',
+      'మీరు లేకపోతే నా ప్రణాళికలు వృథా 💔',
+      'మీ చేతుల్లో నాకు భద్రత 🙏',
+      'మీ వంటకాలకు సమానమైన రుచులు ఎక్కడా లేవు 😋',
+      'మీ ఊపిరే నా శక్తి 💪',
+      'మీ మాటలతోనే నేనిలా ఎదిగాను 🌱',
+      'మీ ఆశీర్వాదంతోనే నా ప్రతి అడుగు ముందుకు 🪷',
+      'మీరు చేసిన త్యాగాలను గుర్తు చేసుకుంటే కన్నీళ్లు వస్తాయి 😢',
+      'మీ కోసం నేను ఎప్పటికీ చిన్నవాడినే 👶'
+    ];
+
+    const surpriseContainer = document.getElementById("surprises");
+
+    surpriseTexts.forEach((text, index) => {
+      const button = document.createElement("button");
+      button.className = "reveal-button";
+      button.innerText = `Surprise ${index + 1}`;
+
+      const div = document.createElement("div");
+      div.className = "surprise";
+      div.innerText = text;
+
+      button.onclick = () => {
+        div.style.display = "block";
+        button.style.display = "none";
+      };
+
+      surpriseContainer.appendChild(button);
+      surpriseContainer.appendChild(div);
+    });
+  </script>
 </body>
 </html>
