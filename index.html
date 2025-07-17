@@ -1,101 +1,154 @@
-import { useEffect, useRef, useState } from "react";
-import confetti from "canvas-confetti";
+<!DOCTYPE html>
+<html lang="te">
 
-const messages = [
-      "అమ్మా... ఈ రోజు నీ పుట్టినరోజు!",
-      "So, పుట్టినరోజు శుభాకాంక్షలు! 💐",
-      "నీ ప్రేమలో ముడిపడిన ప్రతి జ్ఞాపకం నా కోసం అమూల్యం.",
-      "ఈ చిన్న గిఫ్ట్ వెబ్‌సైట్ నీకు ఒక చిరు నవ్వును తీసుకొస్తే చాలు.",
-      "ఈ ప్రపంచంలో నువ్వు లేని రోజు ఒక్క రోజైనా ఊహించలేను...",
-      "చిన్నప్పటి నుండి నన్ను ప్రేమించి, గుండెతో కాపాడిన నువ్వే నా రియల్ హీరోయిన్ 💖",
-      "నీ నవ్వే నాకు చీకటిలో వెలుగులా, నీ గుండెనే నాకు భద్రత గదిలా.",
-      "నేను ఎక్కడైనా, ఎప్పుడైనా నీ ప్రేమకి ఎదురు లేదు.",
-      "ఒక్కసారి వెనక్కి తిరిగి చూస్తే, నీ ప్రేమ ముద్దులే నన్ను నిలబెట్టాయి.",
-      "ఈ జన్మలో నాకు దొరికిన గొప్ప వరం నువ్వే అమ్మా.",
-      "నీవు అలసినపుడు నేను ఏమి చేయలేకపోయినా, నీ చిరునవ్వు కోసం ప్రతి రోజు ప్రయత్నిస్తాను.",
-      "అమ్మ, నీ ముద్దు మాటలు ఇంకా నా మనసు లో చెమటల్లా తడుస్తున్నాయి.",
-      "నా చిన్న విజయం లో కూడా నీ హర్షం, నీ అభిమానం నాకు బలమిచ్చాయి.",
-      "నీ ఆశీర్వాదమే నా మార్గం వెలిగించే దీపం.",
-      "ఇక ఎంత చెప్పినా తక్కువే... అయినా ఒక్క మాట: "I Love You Amma 💛",
-      "ఈ ప్రత్యేక రోజున, నీకి నా చిన్న ప్రయత్నం...",
-      "జన్మదిన శుభాకాంక్షలు అమ్మా! నీ ప్రేమకు కృతజ్ఞతగా... ❤️",
-      "అమ్మకు ప్రేమతో, నీ బిడ్డ 🙏"
-];
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>అమ్మకు ప్రేమతో</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap');
 
-export default function StoryGift() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const messageRef = useRef(null);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) {
-        setCurrentIndex((prevIndex) => {
-          if (prevIndex === messages.length - 1) {
-            setTimeout(() => confetti({ particleCount: 300, spread: 180 }), 800);
-            return prevIndex;
-          }
-          return prevIndex + 1;
-        });
+    body {
+      font-family: 'Noto Sans Telugu', sans-serif;
+      background: linear-gradient(120deg, #ffdde1, #f9c5d1, #f6e2b3, #e0bbf9);
+      background-size: 600% 600%;
+      animation: gradientBG 20s ease infinite;
+      color: #4b0082;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .story-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .story-text {
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 700px;
+      line-height: 2.2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [paused]);
+    }
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-yellow-100 to-purple-200 p-6">
-      <div className="relative max-w-xl w-full text-center">
-        <div className="absolute top-0 right-0 m-4">
-          <button
-            onClick={() => setPaused(!paused)}
-            className="bg-white/80 backdrop-blur-md px-4 py-2 text-sm rounded-full shadow-md hover:bg-white"
-          >
-            {paused ? "▶️ Resume" : "⏸ Pause"}
-          </button>
-        </div>
+    .pause-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
 
-        <div
-          ref={messageRef}
-          className="bg-white/80 rounded-3xl p-10 shadow-xl border-4 border-white animate-fadeIn text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700 backdrop-blur-md"
-        >
-          <p className="transition-all duration-700 ease-in-out">
-            {messages[currentIndex]}
-          </p>
-        </div>
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 182, 193, 0.6);
+      border-radius: 50%;
+      animation: fall linear infinite;
+    }
 
-        <img
-          src="/c150b775-7122-49f6-b7be-acfdd62d1cc6.png"
-          alt="Gift surprise"
-          className="w-28 sm:w-36 mx-auto mt-8 animate-bounce drop-shadow-xl"
-        />
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
 
-        {/* Floating animations */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full animate-pulse">
-            <div className="w-4 h-4 bg-pink-400 rounded-full absolute animate-float delay-100" style={{ top: "10%", left: "20%" }}></div>
-            <div className="w-3 h-3 bg-yellow-300 rounded-full absolute animate-float delay-300" style={{ top: "40%", left: "80%" }}></div>
-            <div className="w-5 h-5 bg-purple-300 rounded-full absolute animate-float delay-500" style={{ top: "70%", left: "50%" }}></div>
-          </div>
-        </div>
-      </div>
+    .gif {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
 
-      <style jsx>{`
-        @keyframes float {
-          0% { transform: translateY(0px); opacity: 0.7; }
-          50% { transform: translateY(-20px); opacity: 1; }
-          100% { transform: translateY(0px); opacity: 0.7; }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-        .animate-fadeIn {
-          animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-          0% { opacity: 0; }
-          100% { opacity: 1; }
-        }
-      `}</style>
+<body>
+  <button class="pause-btn" onclick="togglePause()">⏸ Pause</button>
+  <div class="story-container">
+    <div id="story" class="story-text">లొడింగ్...
     </div>
-  );
-}
+  </div>
+
+  <script>
+    const lines = [
+      'అమ్మకి పుట్టినరోజు శుభాకాంక్షలు! 🎐',
+      'ఈ ప్రపంచంలో నువ్వు లేని రోజు ఒక్క రోజునా ఉహించలేను...',
+      'చిన్నప్పటి నుండి నన్ను ప్రేమించి, గుండెతో కాపాడిన నువ్వే నా రియల్ హీరోయిన్ 💖',
+      'నీ నవ్వే నాకు చీకటిలో వెలుగులా, నీ గుండెనే నాకు భద్రత గదిలా.',
+      'నేను ఎకకడైనా, ఎప్పుడైనా నీ ప్రేమకి ఎదురు లేదు.',
+      'ఒక్కసారి వెనక్కి తిరిగి చూస్తే, నీ ప్రేమ ముద్దులే నన్ను నిలబెట్టాయి.',
+      'ఈ జన్మలో నాకు దొరికిన గొప్ప వరం నువ్వే అమ్మా.',
+      'నీవు అలసినపుడు నాకేమీ చేయలేకపోయినా, నీ చిరునవ్వు కోసం ప్రతి రోజు ప్రయత్నిస్తాను.',
+      'అమ్మ, నీ ముద్దు మాటలు ఇన్కా నా మనసు లో చెమటల్లా తడుస్తున్నాయి.',
+      'నా చిన్న విజయం లో కూడా నీ హర్షం, నీ అభిమానం నాకు బలమిచ్చాయి.',
+      'నీ ఆశీర్వాదమే నా మార్గం వెలిగించే దీపం.',
+      'ఇక ఎంత చెప్పినా తక్కువే... అయినా ఒక్క మాట: "I Love You Amma 💛"',
+      'ఈ ప్రత్యేక రోజున, నీకి నా చిన్న ప్రయత్నం...',
+      'అమ్మకు ప్రేమతో, నీ బిడ్డ 🙏'
+    ];
+
+    const storyEl = document.getElementById('story');
+    let index = 0;
+    let interval;
+    let paused = false;
+
+    function showLine() {
+      if (!paused) {
+        storyEl.style.animation = 'none';
+        void storyEl.offsetWidth;
+        storyEl.style.animation = null;
+
+        storyEl.innerHTML = lines[index];
+        index++;
+
+        if (index < lines.length) {
+          interval = setTimeout(showLine, 4000);
+          if (index % 3 === 0) triggerGif();
+        } else {
+          clearTimeout(interval);
+          triggerGif(); // Final confetti
+        }
+      }
+    }
+
+    function togglePause() {
+      paused = !paused;
+      const btn = document.querySelector('.pause-btn');
+      btn.innerText = paused ? '▶️ Resume
