@@ -1,150 +1,188 @@
 <!DOCTYPE html>
 <html lang="te">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ammaku Prematho</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>అమ్మకు ప్రేమతో</title>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap');
+
+    * {
       margin: 0;
-      font-family: 'Noto Sans Telugu', sans-serif;
-      background: linear-gradient(120deg, #ffc0cb, #fff8dc, #e6e6fa);
-      overflow: hidden;
-      color: #3b0a45;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .container {
-      height: 100vh;
+
+    body {
+      font-family: 'Noto Sans Telugu', sans-serif;
+      background: linear-gradient(120deg, #ffdde1, #f9c5d1, #f6e2b3, #e0bbf9);
+      background-size: 600% 600%;
+      animation: gradientBG 20s ease infinite;
+      color: #4b0082;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .story-container {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       text-align: center;
+      height: 100vh;
+      padding: 2rem;
       position: relative;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+
+    .story-text {
+      font-size: 1.5rem;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       max-width: 700px;
-      margin: auto;
-      animation: fadeIn 1s ease-in-out;
+      line-height: 2.2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.6s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
     }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 30px;
-    }
-    button {
-      background: #ff69b4;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
-    }
-    button:hover {
-      background: #ff1493;
-    }
+
     .pause-btn {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      background: transparent;
-      color: #a0522d;
-      border: 1px solid #a0522d;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      z-index: 999;
     }
-    .paused::after {
-      content: "Paused. Click Next to continue.";
-      display: block;
-      color: #b22222;
-      margin-top: 10px;
-      font-style: italic;
-    }
+
     .petal {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: pink;
+      background: rgba(255, 182, 193, 0.6);
       border-radius: 50%;
-      opacity: 0.5;
-      animation: float 10s linear infinite;
+      animation: fall linear infinite;
     }
-    @keyframes float {
-      0% {
-        transform: translateY(0) rotate(0);
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-      }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
     }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
+
+    .gif {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      z-index: 1;
+      pointer-events: none;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div id="story" class="card"></div>
-    <button onclick="nextSlide()">Next</button>
-    <button class="pause-btn" onclick="togglePause()">Pause</button>
+  <button class="pause-btn" onclick="togglePause()">⏸ Pause</button>
+  <div class="story-container">
+    <div id="story" class="story-text">లొడింగ్...</div>
   </div>
+
   <script>
-    const slides = [
-      `అమ్మా… ఈ రోజు నీ పుట్టినరోజు!`,
-      `నా హృదయం లో నీవు ఉన్నది ఎంత ప్రాముఖ్యం కలిగినదో చెప్పడం చాలా కష్టం.`,
-      `నేను ఎప్పుడూ ఎమోషనల్‌గా మాట్లాడే వాడిని కాదు. కానీ ఈ రోజు… ఇది నీకు మాత్రమే!`,
-      `ఒక తల్లి ప్రేమ ఎంత నిశ్శబ్దమయినదో, అంత బలమైనదీ.`,
-      `నా చిన్న ఆశల నుంచి, నా గొప్ప కలల వరకు నీవే తోడవుతావు.`,
-      `నీ చిరునవ్వు నాకు శాంతిని ఇస్తుంది. నీ మాటలు నా మనసును నలుపుతాయి.`,
-      `నీవు చేసిన త్యాగాలు తెలుసుకోవడానికి ఒక జీవిత కాలం సరిపోదు.`,
-      `నువ్వు నన్ను ప్రేమించిన విధానమే నాకు ప్రేమకు అర్థం నేర్పింది.`,
-      `నీ ఆశీస్సులతోనే నేను ఎదుగుతున్నాను, రోజు రోజుకూ.`,
-      `చాలా తక్కువ మాటల్లో చెప్పాలంటే… Ammaku Prematho 💜`,
-      `ఈ చిన్న ప్రేమ కథ, నా మనసు లోని కొంత భాగమే.`,
-      `Happy Birthday Amma 💐` ,
-      `నా జీవితం లో అత్యంత విలువైన బహుమతి – నీవే.`,
-      `ఒక్కసారి మళ్లీ చూసి నవ్వు… ఎందుకంటే ఆ నవ్వు నాకు వెలుగు.`
+    const lines = [
+      'అమ్మకి పుట్టినరోజు శుభాకాంక్షలు! 💐',
+      'ఈ ప్రపంచంలో నువ్వు లేని రోజు ఒక్క రోజైనా ఊహించలేను...',
+      'చిన్నప్పటి నుండి నన్ను ప్రేమించి, గుండెతో కాపాడిన నువ్వే నా రియల్ హీరోయిన్ 💖',
+      'నీ నవ్వే నాకు చీకటిలో వెలుగులా, నీ గుండెనే నాకు భద్రత గదిలా.',
+      'నేను ఎక్కడైనా, ఎప్పుడైనా నీ ప్రేమకి ఎదురు లేదు.',
+      'ఒక్కసారి వెనక్కి తిరిగి చూస్తే, నీ ప్రేమ ముద్దులే నన్ను నిలబెట్టాయి.',
+      'ఈ జన్మలో నాకు దొరికిన గొప్ప వరం నువ్వే అమ్మా.',
+      'నీవు అలసినపుడు నాకేమీ చేయలేకపోయినా, నీ చిరునవ్వు కోసం ప్రతి రోజు ప్రయత్నిస్తాను.',
+      'అమ్మ, నీ ముద్దు మాటలు ఇంకా నా మనసు లో చెమటల్లా తడుస్తున్నాయి.',
+      'నా చిన్న విజయం లో కూడా నీ హర్షం, నీ అభిమానం నాకు బలమిచ్చాయి.',
+      'నీ ఆశీర్వాదమే నా మార్గం వెలిగించే దీపం.',
+      'ఇక ఎంత చెప్పినా తక్కువే... అయినా ఒక్క మాట: "I Love You Amma 💛"',
+      'ఈ ప్రత్యేక రోజున, నీకి నా చిన్న ప్రయత్నం...',
+      'అమ్మకు ప్రేమతో, నీ బిడ్డ 🙏'
     ];
 
-    let index = 0;
-    let paused = false;
     const storyEl = document.getElementById('story');
+    let index = 0;
+    let interval;
+    let paused = false;
 
-    function nextSlide() {
-      if (!paused && index < slides.length) {
-        storyEl.innerHTML = `<p>${slides[index]}</p>`;
+    function showLine() {
+      if (!paused) {
+        storyEl.style.animation = 'none';
+        void storyEl.offsetWidth;
+        storyEl.style.animation = null;
+
+        storyEl.innerHTML = lines[index];
         index++;
-      } else if (paused) {
-        paused = false;
-        storyEl.classList.remove('paused');
+
+        if (index < lines.length) {
+          interval = setTimeout(showLine, 4000);
+          if (index % 3 === 0) triggerGif();
+        } else {
+          clearTimeout(interval);
+        }
       }
     }
 
     function togglePause() {
       paused = !paused;
-      storyEl.classList.toggle('paused');
+      const btn = document.querySelector('.pause-btn');
+      btn.innerText = paused ? '▶️ Resume' : '⏸ Pause';
+      if (!paused) {
+        showLine();
+      } else {
+        clearTimeout(interval);
+      }
     }
 
-    // Create floating petals
-    for (let i = 0; i < 25; i++) {
-      let petal = document.createElement('div');
-      petal.classList.add('petal');
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.animationDuration = 5 + Math.random() * 10 + 's';
-      document.body.appendChild(petal);
+    function createPetals() {
+      for (let i = 0; i < 20; i++) {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.animationDuration = 5 + Math.random() * 5 + 's';
+        petal.style.opacity = Math.random();
+        document.body.appendChild(petal);
+      }
     }
 
-    // Auto-start first slide
-    nextSlide();
+    function triggerGif() {
+      const gif = document.createElement('img');
+      gif.src = 'https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif'; // confetti burst
+      gif.className = 'gif';
+      gif.style.top = Math.random() * 70 + 'vh';
+      gif.style.left = Math.random() * 80 + 'vw';
+      document.body.appendChild(gif);
+      setTimeout(() => gif.remove(), 3000);
+    }
+
+    window.onload = () => {
+      createPetals();
+      showLine();
+    };
   </script>
 </body>
+
 </html>
