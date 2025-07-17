@@ -4,184 +4,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>అమ్మకు ప్రేమతో</title>
+  <title>Ammaku Prematho</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap');
-
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Noto Sans Telugu', sans-serif;
-      background: linear-gradient(120deg, #ffdde1, #f9c5d1, #f6e2b3, #e0bbf9);
-      background-size: 600% 600%;
-      animation: gradientBG 20s ease infinite;
-      color: #4b0082;
-      overflow: hidden;
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .story-container {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #ffe0e9, #fff7d6, #f0f0ff);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .message-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
       text-align: center;
-      height: 100vh;
-      padding: 2rem;
-      position: relative;
-    }
-
-    .story-text {
       font-size: 1.5rem;
-      background: rgba(255, 255, 255, 0.3);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      max-width: 700px;
-      line-height: 2.2rem;
-      backdrop-filter: blur(10px);
-      transition: all 0.6s ease;
+      color: #d6336c;
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 1s ease forwards;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .message-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .controls {
+      margin-top: 20px;
     }
 
     .pause-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #fff;
+      padding: 10px 20px;
+      background-color: #ff69b4;
+      color: white;
       border: none;
-      padding: 10px 15px;
-      font-size: 1rem;
-      border-radius: 5px;
+      border-radius: 30px;
+      font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      z-index: 999;
+      position: fixed;
+      bottom: 30px;
     }
 
-    .petal {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: rgba(255, 182, 193, 0.6);
-      border-radius: 50%;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-10vh) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
-    }
-
-    .gif {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      z-index: 1;
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
       pointer-events: none;
+      z-index: 9999;
     }
   </style>
 </head>
 
 <body>
-  <button class="pause-btn" onclick="togglePause()">⏸ Pause</button>
-  <div class="story-container">
-    <div id="story" class="story-text">లొడింగ్...</div>
-  </div>
+  <div id="message" class="message-box"></div>
+  <button class="pause-btn" onclick="togglePause()">Pause</button>
 
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const lines = [
-      'అమ్మకి పుట్టినరోజు శుభాకాంక్షలు! 💐',
+    const messages = [
+      "అమ్మా... ఈ రోజు నీ పుట్టినరోజు!",
+      'So, పుట్టినరోజు శుభాకాంక్షలు! 💐',
+      "నీ ప్రేమలో ముడిపడిన ప్రతి జ్ఞాపకం నా కోసం అమూల్యం.",
+      "ఈ చిన్న గిఫ్ట్ వెబ్‌సైట్ నీకు ఒక చిరు నవ్వును తీసుకొస్తే చాలు.",
       'ఈ ప్రపంచంలో నువ్వు లేని రోజు ఒక్క రోజైనా ఊహించలేను...',
       'చిన్నప్పటి నుండి నన్ను ప్రేమించి, గుండెతో కాపాడిన నువ్వే నా రియల్ హీరోయిన్ 💖',
       'నీ నవ్వే నాకు చీకటిలో వెలుగులా, నీ గుండెనే నాకు భద్రత గదిలా.',
       'నేను ఎక్కడైనా, ఎప్పుడైనా నీ ప్రేమకి ఎదురు లేదు.',
       'ఒక్కసారి వెనక్కి తిరిగి చూస్తే, నీ ప్రేమ ముద్దులే నన్ను నిలబెట్టాయి.',
       'ఈ జన్మలో నాకు దొరికిన గొప్ప వరం నువ్వే అమ్మా.',
-      'నీవు అలసినపుడు నాకేమీ చేయలేకపోయినా, నీ చిరునవ్వు కోసం ప్రతి రోజు ప్రయత్నిస్తాను.',
+      'నీవు అలసినపుడు నేను ఏమి చేయలేకపోయినా, నీ చిరునవ్వు కోసం ప్రతి రోజు ప్రయత్నిస్తాను.',
       'అమ్మ, నీ ముద్దు మాటలు ఇంకా నా మనసు లో చెమటల్లా తడుస్తున్నాయి.',
       'నా చిన్న విజయం లో కూడా నీ హర్షం, నీ అభిమానం నాకు బలమిచ్చాయి.',
       'నీ ఆశీర్వాదమే నా మార్గం వెలిగించే దీపం.',
       'ఇక ఎంత చెప్పినా తక్కువే... అయినా ఒక్క మాట: "I Love You Amma 💛"',
       'ఈ ప్రత్యేక రోజున, నీకి నా చిన్న ప్రయత్నం...',
+      "జన్మదిన శుభాకాంక్షలు అమ్మా! నీ ప్రేమకు కృతజ్ఞతగా... ❤️"
       'అమ్మకు ప్రేమతో, నీ బిడ్డ 🙏'
     ];
 
-    const storyEl = document.getElementById('story');
+    const messageBox = document.getElementById("message");
     let index = 0;
-    let interval;
     let paused = false;
 
-    function showLine() {
-      if (!paused) {
-        storyEl.style.animation = 'none';
-        void storyEl.offsetWidth;
-        storyEl.style.animation = null;
+    function showMessage() {
+      if (paused || index >= messages.length) return;
+      messageBox.classList.remove("show");
+      setTimeout(() => {
+        messageBox.innerText = messages[index];
+        messageBox.classList.add("show");
 
-        storyEl.innerHTML = lines[index];
-        index++;
-
-        if (index < lines.length) {
-          interval = setTimeout(showLine, 4000);
-          if (index % 3 === 0) triggerGif();
-        } else {
-          clearTimeout(interval);
+        // Animate confetti at the end
+        if (index === messages.length - 1) {
+          setTimeout(() => {
+            confetti({
+              particleCount: 200,
+              spread: 100,
+              origin: { y: 0.6 }
+            });
+          }, 1000);
         }
-      }
+
+        index++;
+        if (index < messages.length) {
+          setTimeout(showMessage, 4500);
+        }
+      }, 300);
     }
 
     function togglePause() {
       paused = !paused;
-      const btn = document.querySelector('.pause-btn');
-      btn.innerText = paused ? '▶️ Resume' : '⏸ Pause';
-      if (!paused) {
-        showLine();
-      } else {
-        clearTimeout(interval);
+      if (!paused && index < messages.length) {
+        showMessage();
       }
+      document.querySelector(".pause-btn").innerText = paused ? "Resume" : "Pause";
     }
 
-    function createPetals() {
-      for (let i = 0; i < 20; i++) {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
-        petal.style.left = Math.random() * 100 + 'vw';
-        petal.style.animationDuration = 5 + Math.random() * 5 + 's';
-        petal.style.opacity = Math.random();
-        document.body.appendChild(petal);
-      }
-    }
-
-    function triggerGif() {
-      const gif = document.createElement('img');
-      gif.src = 'https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif'; // confetti burst
-      gif.className = 'gif';
-      gif.style.top = Math.random() * 70 + 'vh';
-      gif.style.left = Math.random() * 80 + 'vw';
-      document.body.appendChild(gif);
-      setTimeout(() => gif.remove(), 3000);
-    }
-
-    window.onload = () => {
-      createPetals();
-      showLine();
-    };
+    // Start autoplay
+    setTimeout(showMessage, 1000);
   </script>
 </body>
 
