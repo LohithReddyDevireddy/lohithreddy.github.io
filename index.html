@@ -1,140 +1,150 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ammaku Prematho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ffc0cb, #fff3e6, #e6e6fa);
-      overflow-x: hidden;
+      font-family: 'Noto Sans Telugu', sans-serif;
+      background: linear-gradient(120deg, #ffc0cb, #fff8dc, #e6e6fa);
+      overflow: hidden;
+      color: #3b0a45;
     }
-
-    .magic-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      background: url('https://media.giphy.com/media/WoWm8YzFQJg5i/giphy.gif') repeat;
-      background-size: contain;
-      opacity: 0.05;
-    }
-
     .container {
-      position: relative;
-      z-index: 1;
-      padding: 40px;
-      max-width: 800px;
-      margin: auto;
-    }
-
-    h1 {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
       text-align: center;
-      color: #6a0dad;
+      position: relative;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+      max-width: 700px;
+      margin: auto;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h1 {
       font-size: 2.5rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #ffd700;
     }
-
-    .poem-card {
-      background-color: #fff8dc;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 40px;
-      box-shadow: 0 8px 20px rgba(255, 182, 193, 0.5);
-      border: 2px solid #e6e6fa;
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
     }
-
-    .reveal-button {
-      display: inline-block;
-      background: #ffb6c1;
-      color: #fff;
+    button {
+      background: #ff69b4;
+      color: white;
       padding: 10px 20px;
-      margin: 10px 0;
       border: none;
       border-radius: 30px;
+      font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      transition: background 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
     }
-    .reveal-button:hover {
-      background: #e75480;
+    button:hover {
+      background: #ff1493;
     }
-
-    .surprise {
-      display: none;
+    .pause-btn {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      background: transparent;
+      color: #a0522d;
+      border: 1px solid #a0522d;
+    }
+    .paused::after {
+      content: "Paused. Click Next to continue.";
+      display: block;
+      color: #b22222;
       margin-top: 10px;
-      font-size: 1.1rem;
-      background: #fff;
-      padding: 15px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(106, 13, 173, 0.2);
+      font-style: italic;
+    }
+    .petal {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: float 10s linear infinite;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-  <div class="magic-bg"></div>
   <div class="container">
-    <h1>🎉 అమ్మకు ప్రేమతో 🎉</h1>
-
-    <div class="poem-card">
-      <p style="font-size: 1.2rem; line-height: 2;">
-        అమ్మా… నా శ్వాసకి శక్తిని ఇచ్చే నీవే<br>
-        నా వాక్యాలకు వేదిక అయినది నీవే<br>
-        నా కన్నీటి వెనకాల చిరునవ్వు చూపించేది నీవే<br>
-        నా ప్రతి గెలుపుకి కారణమైన దేవత నీవే<br><br>
-        నీ కళ్ళల్లో నా లోకాన్ని చూసాను<br>
-        నీ చేతుల్లో దేవుడి స్పర్శ అనిపించింది<br>
-        నా మనసు బాధపడినపుడు – నువ్వు కన్నీటి మందవయ్యావు<br><br>
-        Happy Birthday Amma! 💖<br>
-        నా మనసుకే తెలియని ప్రేమకు... ఈ చిన్న గిఫ్ట్.
-      </p>
-    </div>
-
-    <h2 style="color:#6a0dad">🌟 14 Surprises for You 🌟</h2>
-    <div id="surprises"></div>
+    <div id="story" class="card"></div>
+    <button onclick="nextSlide()">Next</button>
+    <button class="pause-btn" onclick="togglePause()">Pause</button>
   </div>
-
   <script>
-    const surpriseTexts = [
-      'మీ నవ్వు నాకు ఓ ఆశా దీపం 💫',
-      'మీరు చెప్పిన చిన్న మాటే నాకు మార్గదర్శకం ✨',
-      'మీ ప్రేమే నా శ్వాస 💖',
-      'మీరు లేకపోతే నేనెవరో తెలియదు 🌼',
-      'నా మొదటి గురువు మీరే 👩‍🏫',
-      'అమ్మ అంటే ఒక లోకం – అది మీ రూపమే 🌍',
-      'మీరు లేకపోతే నా ప్రణాళికలు వృథా 💔',
-      'మీ చేతుల్లో నాకు భద్రత 🙏',
-      'మీ వంటకాలకు సమానమైన రుచులు ఎక్కడా లేవు 😋',
-      'మీ ఊపిరే నా శక్తి 💪',
-      'మీ మాటలతోనే నేనిలా ఎదిగాను 🌱',
-      'మీ ఆశీర్వాదంతోనే నా ప్రతి అడుగు ముందుకు 🪷',
-      'మీరు చేసిన త్యాగాలను గుర్తు చేసుకుంటే కన్నీళ్లు వస్తాయి 😢',
-      'మీ కోసం నేను ఎప్పటికీ చిన్నవాడినే 👶'
+    const slides = [
+      `అమ్మా… ఈ రోజు నీ పుట్టినరోజు!`,
+      `నా హృదయం లో నీవు ఉన్నది ఎంత ప్రాముఖ్యం కలిగినదో చెప్పడం చాలా కష్టం.`,
+      `నేను ఎప్పుడూ ఎమోషనల్‌గా మాట్లాడే వాడిని కాదు. కానీ ఈ రోజు… ఇది నీకు మాత్రమే!`,
+      `ఒక తల్లి ప్రేమ ఎంత నిశ్శబ్దమయినదో, అంత బలమైనదీ.`,
+      `నా చిన్న ఆశల నుంచి, నా గొప్ప కలల వరకు నీవే తోడవుతావు.`,
+      `నీ చిరునవ్వు నాకు శాంతిని ఇస్తుంది. నీ మాటలు నా మనసును నలుపుతాయి.`,
+      `నీవు చేసిన త్యాగాలు తెలుసుకోవడానికి ఒక జీవిత కాలం సరిపోదు.`,
+      `నువ్వు నన్ను ప్రేమించిన విధానమే నాకు ప్రేమకు అర్థం నేర్పింది.`,
+      `నీ ఆశీస్సులతోనే నేను ఎదుగుతున్నాను, రోజు రోజుకూ.`,
+      `చాలా తక్కువ మాటల్లో చెప్పాలంటే… Ammaku Prematho 💜`,
+      `ఈ చిన్న ప్రేమ కథ, నా మనసు లోని కొంత భాగమే.`,
+      `Happy Birthday Amma 💐` ,
+      `నా జీవితం లో అత్యంత విలువైన బహుమతి – నీవే.`,
+      `ఒక్కసారి మళ్లీ చూసి నవ్వు… ఎందుకంటే ఆ నవ్వు నాకు వెలుగు.`
     ];
 
-    const surpriseContainer = document.getElementById("surprises");
+    let index = 0;
+    let paused = false;
+    const storyEl = document.getElementById('story');
 
-    surpriseTexts.forEach((text, index) => {
-      const button = document.createElement("button");
-      button.className = "reveal-button";
-      button.innerText = `Surprise ${index + 1}`;
+    function nextSlide() {
+      if (!paused && index < slides.length) {
+        storyEl.innerHTML = `<p>${slides[index]}</p>`;
+        index++;
+      } else if (paused) {
+        paused = false;
+        storyEl.classList.remove('paused');
+      }
+    }
 
-      const div = document.createElement("div");
-      div.className = "surprise";
-      div.innerText = text;
+    function togglePause() {
+      paused = !paused;
+      storyEl.classList.toggle('paused');
+    }
 
-      button.onclick = () => {
-        div.style.display = "block";
-        button.style.display = "none";
-      };
+    // Create floating petals
+    for (let i = 0; i < 25; i++) {
+      let petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = 5 + Math.random() * 10 + 's';
+      document.body.appendChild(petal);
+    }
 
-      surpriseContainer.appendChild(button);
-      surpriseContainer.appendChild(div);
-    });
+    // Auto-start first slide
+    nextSlide();
   </script>
 </body>
 </html>
